@@ -73,3 +73,13 @@ exports.insertStocks = functions.https.onRequest((req, res) => {
         res.status(500).send(JSON.stringify({code: 'internal', message: 'insert-stocks-erorr', details: err}));
       });
 });
+
+exports.userProfileCreate = functions.auth.user().onCreate((user) => {
+  const uid = user.uid;
+  var data = {
+    advanced: false
+  };
+  
+  var setDoc = db.collection('users').doc(uid).set(data);
+  return setDoc
+});
